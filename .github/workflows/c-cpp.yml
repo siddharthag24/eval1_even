@@ -1,0 +1,29 @@
+name: C++ Check
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: windows
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up GCC
+        uses: actions/setup-gcc@v1
+        with:
+          gcc-version: 11
+
+      - name: Build
+        run: |
+          g++ -std=c++17 -o main main.cpp
+      
+      - name: Run the program
+        run: |
+          echo "This step is just to demonstrate the program running; it is not interactive."
+          echo "You can modify this step to include input redirection if needed."
+
+      - name: Check for common coding errors
+        run: |
+          cppcheck --enable=all --inconclusive --std=c++17 main.cpp
